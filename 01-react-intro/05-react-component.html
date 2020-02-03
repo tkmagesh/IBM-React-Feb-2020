@@ -27,7 +27,7 @@
             };
 
             onBtnGreetClick = (evt) => {
-                let newMessage = `Hi ${this.state.userName}, Have a nice day!`;
+                let newMessage = `Hi ${this.state.userName}, ${this.props.greet}`;
                 this.setState({message : newMessage }); 
             }
 
@@ -37,6 +37,7 @@
 
             //presentation
             render = () => {
+                
                 return(
                     <div>
                         <h3>Greeter</h3>
@@ -50,7 +51,13 @@
             }
         }
 
-        ReactDOM.render(React.createElement(Greeter),
+        ReactDOM.render(
+            <div>
+                <Greeter greet="Have a good day!"/>
+                <hr/>
+                <Greeter greet="Have a nice day!"/>
+            </div>,
+            
             document.getElementById('root'));
 
     </script>
