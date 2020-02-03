@@ -19,6 +19,12 @@
         label{
             display: block;
         }
+        .poorSalary{
+            color : red;
+        }
+        .goodSalary{
+            color : green;
+        }
     </style>
     <script src="react.development.js"></script>
     <script src="react-dom.development.js"></script>
@@ -63,20 +69,30 @@
                         <div className="field">
                             <input type="button" value="Calculate" onClick={this.onCalculateClick} />
                         </div>
-                        <div className="field">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>{basic}</td>
-                                        <td>{hra}</td>
-                                        <td>{da}</td>
-                                        <td>{tax}</td>
-                                        <td>{salary}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <SalaryCalculatorResult data={this.state} />
                     </section>
+                )
+            }
+        }
+
+        class SalaryCalculatorResult extends React.Component{
+            render = () => {
+                const { basic, hra, da, tax, salary } = this.props.data;
+                const salaryEle = salary < 10000 ? (<td className="poorSalary">{salary}</td>) : (<td className="goodSalary">{salary}</td>);
+                return(
+                    <div className="field">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>{basic}</td>
+                                    <td>{hra}</td>
+                                    <td>{da}</td>
+                                    <td>{tax}</td>
+                                    { salary === 0 ? null : salaryEle }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 )
             }
         }
