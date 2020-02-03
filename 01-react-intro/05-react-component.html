@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>React Component Intro</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <style>
+        .highlight{
+            color : blue;
+            font-size: 18pt;
+        }
+    </style>
+    <script type="text/babel">
+
+        //presentation + behavior + state
+        class Greeter extends React.Component{
+            //presentation
+            render = () => {
+                return(
+                    <div>
+                        <h3>Greeter</h3>
+                        <hr/>
+                        <label htmlFor="">User Name :</label>
+                        <input type="text" />
+                        <button>Greet</button>
+                        <div className="highlight">[Default message]</div>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(React.createElement(Greeter),
+            document.getElementById('root'));
+
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
