@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>React UI</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script>
+        function init(){
+            var btnRender = document.getElementById('btnRender');
+            btnRender.addEventListener('click', onBtnRenderClick);
+        }
+        function onBtnRenderClick(){
+            var app = React.createElement('div', null,
+                React.createElement('h1', null, 'React.js'),
+                React.createElement('hr'),
+                React.createElement('div', null, 
+                    React.createElement('h3', null, 'Introduction'),
+                    React.createElement('p', null, 'Officia mollit eiusmod nostrud non enim fugiat dolor cupidatat laboris reprehenderit culpa do non. Ut elit culpa in esse qui incididunt nostrud Lorem. Incididunt velit et qui excepteur ullamco magna laboris aliquip et laborum.Minim ad ex eiusmod ea consequat magna amet laboris. Amet non sit culpa exercitation labore aute consectetur pariatur magna minim in exercitation. Tempor anim eu proident exercitation cillum. Nulla quis dolore aliquip exercitation. In minim anim in amet minim. Incididunt eu nostrud aliqua cillum amet est mollit.'),
+                    React.createElement('p', null, 'Incididunt enim commodo elit aliquip duis. Pariatur cupidatat voluptate voluptate deserunt est dolore exercitation nostrud laboris incididunt eu dolore ad amet. Proident ea tempor eu id duis Lorem pariatur nisi. Esse dolore sunt do adipisicing sint ipsum dolore reprehenderit laborum officia. Nisi ea cillum in reprehenderit eiusmod eiusmod duis tempor qui amet tempor fugiat exercitation. Laboris id et ea duis magna ullamco ad sint. Pariatur nulla culpa anim amet dolore est cillum nulla elit adipisicing laborum reprehenderit ipsum consequat.')
+                ),
+                React.createElement('div', null,
+                    React.createElement('h3', null, 'Advantages'),
+                    React.createElement('ol', null, 
+                        React.createElement('li', null, 'Declarative'),
+                        React.createElement('li', null, 'Efficient')
+                    )
+                )
+            );
+            ReactDOM.render(app,
+                document.getElementById('root'));
+        }
+        window.addEventListener('load', init);
+    </script>
+</head>
+<body>
+    <button id="btnRender">Render</button>
+    <div id="root"></div>
+</body>
+</html>
