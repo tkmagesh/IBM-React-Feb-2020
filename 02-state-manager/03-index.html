@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>State Manager</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <script src="state-manager.js"></script>
+    <script type="text/babel">
+        function spinnerReducer(currentState = 0, action){
+            if (action.type === 'UP') return currentState + action.payload;;
+            if (action.type === 'DOWN') return currentState - action.payload;;
+            return currentState;
+        }
+
+        var store = StateManager.createStore(spinnerReducer);
+
+        var spinnerActionCreators = {
+            up(delta){
+                let action = { type : 'UP', payload : delta };
+                return;
+            },
+            down(delta){
+                let action = { type : 'DOWN', payload : delta };
+                return action;
+            }
+        }
+
+        class Spinner extends React.Component{
+            state = {
+                delta : 0
+            }
+            onDownClick = () => {
+                let action = this.props.actionCreators.down(this.state.delta);
+                this.props.store.dispatch(action);
+            }
+            onUpClick = () => {
+                let action = this.props.actionCreators.up(this.state.delta);
+                this.props.store.dispatch(action);
+            }
+            render = () => {
+                const value = store.getState();
+                return(
+                    <>
+                        <h1>Spinner</h1>
+                        <hr/>
+                        <input type="number" value={this.state.delta} onChange = { evt => this.setState({delta : evt.target.valueAsNumber})} />
+                        <button onClick={this.onDownClick}>Down</button>
+                        <span> [ {value} ] </span>
+                        <button onClick={this.onUpClick}>Up</button>
+                    </>
+                )
+            }
+        }
+
+        function renderApp(){
+            ReactDOM.render(<Spinner store={store} actionCreators={spinnerActionCreators}/>,
+                document.getElementById('root'));
+        }
+        renderApp();
+        store.subscribe(renderApp);
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
