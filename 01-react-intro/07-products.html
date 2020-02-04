@@ -14,18 +14,36 @@
         }
     </style>
     <script type="text/babel">
+        class App extends React.Component{
+            state = {  productNames : [] };
+
+            onNewProduct = (newProduct) => {
+                const { productNames } = this.state;
+                productNames.push(newProduct);
+                this.setState({ productNames : productNames });
+            }
+            render = () => {
+                return(
+                    <div>
+                        <Products 
+                            onNewProduct={this.onNewProduct} 
+                            productNames={this.state.productNames}/>
+                        <ProductsCount data={this.state.productNames.length}/>
+                    </div>
+                )
+            }
+        }
         class Products extends React.Component{
             state = { 
                 newProductName : '',
-                productNames : [] 
+               
             };
             onAddNewClick = () => {   
-                const { productNames, newProductName } = this.state;
-                productNames.push(newProductName);
-                this.setState({productNames : productNames});
+                const { newProductName } = this.state;
+                this.props.onNewProduct(newProductName);
             }
             render = () => {
-                const { productNames } = this.state;
+                const { productNames } = this.props;
                 const productItems = productNames.map((productName, index) => (
                     <li key={index}>
                         {productName}
@@ -51,12 +69,12 @@
                 return(
                     <div>
                         <span>Count : </span>
-                        <span>[count]</span>
+                        <span>{this.props.data}</span>
                     </div>
                 )
             }
         }
-        ReactDOM.render(<Products/>,
+        ReactDOM.render(<App/>,
             document.getElementById('root'));
     </script>
 </head>
