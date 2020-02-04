@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>State Manager</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <script src="state-manager.js"></script>
+    <script type="text/babel">
+        function spinnerReducer(currentState = 0, action){
+            if (action.type === 'UP') return currentState + action.payload;;
+            if (action.type === 'DOWN') return currentState - action.payload;;
+            return currentState;
+        }
+
+        
+
+        var spinnerActionCreators = {
+            up(delta){
+                let action = { type : 'UP', payload : delta };
+                return action;
+            },
+            down(delta){
+                let action = { type : 'DOWN', payload : delta };
+                return action;
+            }
+        }
+
+        function bindSpinnerActionCreators(actionCreators, dispatch){
+           var actionDispatchers = {
+                up(delta){
+                    let action = actionCreators.up(delta);
+                    dispatch(action);
+                },
+                down(delta){
+                    let action = actionCreators.down(delta);
+                    dispatch(action);
+                }
+           };
+           return actionDispatchers;
+        }
+
+        var store = StateManager.createStore(spinnerReducer);
+        var spinnerActionDispatchers = bindSpinnerActionCreators(spinnerActionCreators, store.dispatch);
+
+        class Spinner extends React.Component{
+            state = {
+                delta : 0
+            }
+            onDownClick = () => {
+                this.props.actionDispatchers.down(this.state.delta);
+            }
+            onUpClick = () => {
+                this.props.actionDispatchers.up(this.state.delta);
+            }
+            render = () => {
+                const value = store.getState();
+                return(
+                    <>
+                        <h1>Spinner</h1>
+                        <hr/>
+                        <input type="number" value={this.state.delta} onChange = { evt => this.setState({delta : evt.target.valueAsNumber})} />
+                        <button onClick={this.onDownClick}>Down</button>
+                        <span> [ {value} ] </span>
+                        <button onClick={this.onUpClick}>Up</button>
+                    </>
+                )
+            }
+        }
+
+        function renderApp(){
+            ReactDOM.render(<Spinner store={store} actionDispatchers={spinnerActionDispatchers}/>,
+                document.getElementById('root'));
+        }
+        renderApp();
+        store.subscribe(renderApp);
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
