@@ -50,10 +50,10 @@
                 const { basic, hra, da, tax, salary } = this.state;
                 return(
                     <section>
-                        <div className="field">
-                            <label htmlFor="">Basic :</label>
-                            <input type="number" onChange={ evt => this.setState({basic : evt.target.valueAsNumber}) }/>
-                        </div>
+                        <SalaryCalculatorInput 
+                            labelText="Basic :"
+                            onValueChange={ value => this.setState({basic : value})}
+                        />
                         <div className="field">
                             <label htmlFor="">HRA :</label>
                             <input type="number" onChange={ evt => this.setState({hra : evt.target.valueAsNumber}) }/>
@@ -71,6 +71,19 @@
                         </div>
                         <SalaryCalculatorResult data={this.state} />
                     </section>
+                )
+            }
+        }
+
+        class SalaryCalculatorInput extends React.Component{
+            render = () => {
+                const { labelText, onValueChange } = this.props;
+                return(
+                    <div className="field">
+                        <label htmlFor="">{labelText}</label>
+                        <input type="number" 
+                            onChange={ evt => onValueChange(evt.target.valueAsNumber) }/>
+                    </div>
                 )
             }
         }
