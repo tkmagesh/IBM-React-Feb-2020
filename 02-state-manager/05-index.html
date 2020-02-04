@@ -47,30 +47,29 @@
         class Spinner extends React.Component{
             state = {
                 delta : 0
-            }
-            onDownClick = () => {
-                this.props.actionDispatchers.down(this.state.delta);
-            }
-            onUpClick = () => {
-                this.props.actionDispatchers.up(this.state.delta);
-            }
+            } 
             render = () => {
+                const { store, up, down } = this.props;
                 const value = store.getState();
+                const { delta } = this.state;
                 return(
                     <>
                         <h1>Spinner</h1>
                         <hr/>
                         <input type="number" value={this.state.delta} onChange = { evt => this.setState({delta : evt.target.valueAsNumber})} />
-                        <button onClick={this.onDownClick}>Down</button>
+                        <button onClick={() => down(delta)}>Down</button>
                         <span> [ {value} ] </span>
-                        <button onClick={this.onUpClick}>Up</button>
+                        <button onClick={() => up(delta)}>Up</button>
                     </>
                 )
             }
         }
 
         function renderApp(){
-            ReactDOM.render(<Spinner store={store} actionDispatchers={spinnerActionDispatchers}/>,
+            /* ReactDOM.render(<Spinner store={store} up={spinnerActionDispatchers.up} down={spinnerActionDispatchers.down}/>,
+                document.getElementById('root')); */
+
+            ReactDOM.render(<Spinner store={store} {...spinnerActionDispatchers} />,
                 document.getElementById('root'));
         }
         renderApp();
