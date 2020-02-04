@@ -1,0 +1,21 @@
+function spinnerReducer(currentState = 0, action){
+    if (action === 'UP') return ++currentState;
+    if (action === 'DOWN') return --currentState;
+    return currentState;
+}
+
+var store = StateManager.createStore(spinnerReducer)
+
+store.getState()
+
+store.dispatch('UP')
+
+store.getState()
+
+store.dispatch('UP')
+
+store.getState()
+
+store.subscribe(() => console.log('current state = ', store.getState()))
+
+store.dispatch('UP')
