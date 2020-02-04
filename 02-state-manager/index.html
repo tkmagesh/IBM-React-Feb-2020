@@ -5,13 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>State Manager</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
     <script src="state-manager.js"></script>
+    <script type="text/babel">
+        function spinnerReducer(currentState = 0, action){
+            if (action === 'UP') return ++currentState;
+            if (action === 'DOWN') return --currentState;
+            return currentState;
+        }
+
+        var store = StateManager.createStore(spinnerReducer);
+
+        class Spinner extends React.Component{
+            onDownClick = () => {
+                this.props.store.dispatch('DOWN');
+            }
+            onUpClick = () => {
+                this.props.store.dispatch('UP');
+            }
+            render = () => {
+                const value = store.getState();
+                return(
+                    <>
+                        <h1>Spinner</h1>
+                        <hr/>
+                        <button onClick={this.onDownClick}>Down</button>
+                        <span> [ {value} ] </span>
+                        <button onClick={this.onUpClick}>Up</button>
+                    </>
+                )
+            }
+        }
+
+        function renderApp(){
+            ReactDOM.render(<Spinner store={store}/>,
+                document.getElementById('root'));
+        }
+        renderApp();
+        store.subscribe(renderApp);
+    </script>
 </head>
 <body>
-    <h1>Spinner</h1>
-    <hr>
-    <button>Down</button>
-    <span> [ value ] </span>
-    <button>Up</button>
+    <div id="root"></div>
 </body>
 </html>
