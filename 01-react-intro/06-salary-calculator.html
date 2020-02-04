@@ -25,6 +25,10 @@
         .goodSalary{
             color : green;
         }
+        .invalid{
+            border : 1px solid red;
+            background-color: lavenderblush;
+        }
     </style>
     <script src="react.development.js"></script>
     <script src="react-dom.development.js"></script>
@@ -81,6 +85,29 @@
         }
 
         class SalaryCalculatorInput extends React.Component{
+            state = { 
+                value : '',
+                isValid : true,
+                isDirty : false
+            };
+            onTxtChange = (evt) => {
+                const value = evt.target.value;
+                this.setState({value : value, isDirty : true });
+            };
+            onTxtBlur = () => {
+                const { value, isValid, isDirty } = this.state;
+                if (isValid && isDirty){
+                    this.props.onValueChange(parseInt(value));
+                }
+                this.validate();
+            }
+            validate = () => {
+                const { value, isDirty } = this.state;
+                if (value === '' && isDirty){
+                    this.setState({isValid : false});
+                    return;
+                }
+            }
             render = () => {
                 const { labelText, onValueChange, type="number", ...attrs } = this.props;
                 return(
@@ -89,7 +116,10 @@
                         <input 
                             type={type} 
                             {...attrs}
-                            onChange={ evt => onValueChange(evt.target.valueAsNumber) }/>
+                            onChange={ this.onTxtChange }
+                            onBlur={ this.onTxtBlur }
+                            className={ !this.state.isValid ? 'invalid' : ''}
+                        />
                     </div>
                 )
             }
