@@ -11,19 +11,24 @@
     <script src="state-manager.js"></script>
     <script type="text/babel">
         function spinnerReducer(currentState = 0, action){
-            if (action === 'UP') return ++currentState;
-            if (action === 'DOWN') return --currentState;
+            if (action.type === 'UP') return currentState + action.payload;;
+            if (action.type === 'DOWN') return currentState - action.payload;;
             return currentState;
         }
 
         var store = StateManager.createStore(spinnerReducer);
 
         class Spinner extends React.Component{
+            state = {
+                delta : 0
+            }
             onDownClick = () => {
-                this.props.store.dispatch('DOWN');
+                let action = { type : 'DOWN', payload : this.state.delta };
+                this.props.store.dispatch(action);
             }
             onUpClick = () => {
-                this.props.store.dispatch('UP');
+                let action = { type : 'UP', payload : this.state.delta };
+                this.props.store.dispatch(action);
             }
             render = () => {
                 const value = store.getState();
@@ -31,6 +36,7 @@
                     <>
                         <h1>Spinner</h1>
                         <hr/>
+                        <input type="number" value={this.state.delta} onChange = { evt => this.setState({delta : evt.target.valueAsNumber})} />
                         <button onClick={this.onDownClick}>Down</button>
                         <span> [ {value} ] </span>
                         <button onClick={this.onUpClick}>Up</button>
