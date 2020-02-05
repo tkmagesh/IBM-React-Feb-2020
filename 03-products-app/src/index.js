@@ -15,12 +15,12 @@ var productActionDispatchers = bindActionCreators(productActionCreators, store.d
 console.log(productActionDispatchers);
 
 function renderApp() {
-    const productNames = store.getState();
+    const products = store.getState();
     ReactDOM.render(
         <div>
-            <Products data={productNames} {...productActionDispatchers} />
+            <Products data={products} {...productActionDispatchers} />
             <hr />
-            <ProductsCount data={productNames.length} />
+            <ProductsCount data={products} />
         </div>,
         document.getElementById('root'))
 }
