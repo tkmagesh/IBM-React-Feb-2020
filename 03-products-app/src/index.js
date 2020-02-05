@@ -7,6 +7,9 @@ import Products from './Products';
 import Categories from './Categories';
 import appStore from './store';
 
+import axios from 'axios';
+window['axios'] = axios;
+
 ReactDOM.render( 
     <Provider store={appStore}>
         <div>

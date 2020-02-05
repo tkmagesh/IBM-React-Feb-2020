@@ -9,12 +9,13 @@ import * as productActionCreators from './actions';
 
 class Products extends React.Component {
     render = () => {
-        const { data: products, categories, markOutOfStock, removeOutOfStock, addNew } = this.props;
+        const { data: products, categories, markOutOfStock, removeOutOfStock, addNew, loadProducts } = this.props;
         const productItems = products.map((product) => (
            <ProductItem key={product.id} {...{product, markOutOfStock}} />
         ));
         return (
             <>
+                <button onClick={loadProducts}>Load Products</button>
                 <h1>Products</h1>
                 <hr />
                 <ProductsCount data={products} />

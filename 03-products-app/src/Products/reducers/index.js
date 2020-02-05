@@ -12,6 +12,9 @@ function productsReducer(currentState = [], action) {
         console.table(newState);
         return newState;
     }
+    if (action.type === 'INIT_PRODUCTS'){
+        return action.payload;
+    }
     return currentState;
 }
 
