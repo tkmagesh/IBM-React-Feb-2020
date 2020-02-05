@@ -1,17 +1,8 @@
 import React from 'react';
 import './index.css';
 import ProductItem from './views/ProductItem';
+import NewProduct  from './views/NewProduct';
 
-const NewProduct = ({addNew}) => {
-    const [newProductName, setNewProductName] = React.useState('');
-    return (
-        <>
-            <label htmlFor="">Product Name :</label>
-            <input type="text" onChange={evt => setNewProductName(evt.target.value)} />
-            <input type="button" value="Add New" onClick={() => addNew(newProductName)} />
-        </>
-    );
-    }
 
 export class Products extends React.Component {
     render = () => {
