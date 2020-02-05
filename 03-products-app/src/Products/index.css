@@ -1,0 +1,13 @@
+.productsList{
+    list-style: none;
+    -webkit-padding-start : 0px;
+    width : 500px;
+}
+
+.productsList li{
+    margin-bottom: 10px;
+    border : 1px solid gray;
+    background-color: #e7e7e7;
+    border-radius: 5px;
+    padding : 10px;
+}

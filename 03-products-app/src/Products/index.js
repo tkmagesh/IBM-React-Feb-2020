@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 
 export class Products extends React.Component {
     state = {
@@ -10,10 +11,13 @@ export class Products extends React.Component {
         this.props.addNew(newProductName);
     }
     render = () => {
-        const { data: productNames } = this.props;
-        const productItems = productNames.map((productName, index) => (
+        const { data: products, markOutOfStock } = this.props;
+        const productItems = products.map((product, index) => (
             <li key={index}>
-                {productName}
+                <div>{JSON.stringify(product)}</div>
+                <button onClick={() => markOutOfStock(product)}> 
+                    Mark Out of Stock 
+                </button>
             </li>
         ));
         return (
@@ -23,7 +27,7 @@ export class Products extends React.Component {
                 <label htmlFor="">Product Name :</label>
                 <input type="text" onChange={evt => this.setState({ newProductName: evt.target.value })} />
                 <input type="button" value="Add New" onClick={this.onAddNewClick} />
-                <ol>
+                <ol className="productsList">
                     {productItems}
                 </ol>
             </>
