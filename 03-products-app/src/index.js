@@ -9,10 +9,11 @@ import productsReducer from './Products/reducers';
 import * as productActionCreators from './Products/actions';
 import { Products, ProductsCount } from './Products';
 
+import { categoriesReducer, categoryActionCreators, Categories } from './Categories';
+
+
 var store = createStore(productsReducer);
 var productActionDispatchers = bindActionCreators(productActionCreators, store.dispatch);
-
-console.log(productActionDispatchers);
 
 function renderApp() {
     const products = store.getState();

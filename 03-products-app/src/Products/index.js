@@ -1,27 +1,21 @@
 import React from 'react';
 import './index.css';
+import ProductItem from './views/ProductItem';
 
-const ProductItem = ({product, markOutOfStock}) => (
-    <li>
-        {product.isOutOfStock ? (<div className="outOfStock">{product.name}</div>) : (<div>{product.name}</div>)}
-        <button onClick={() => markOutOfStock(product)}>
-            Mark Out of Stock
-        </button>
-        <button>Remove</button>
-    </li>
-)
+const NewProduct = ({addNew}) => {
+    const [newProductName, setNewProductName] = React.useState('');
+    return (
+        <>
+            <label htmlFor="">Product Name :</label>
+            <input type="text" onChange={evt => setNewProductName(evt.target.value)} />
+            <input type="button" value="Add New" onClick={() => addNew(newProductName)} />
+        </>
+    );
+    }
 
 export class Products extends React.Component {
-    state = {
-        newProductName: '',
-
-    };
-    onAddNewClick = () => {
-        const { newProductName } = this.state;
-        this.props.addNew(newProductName);
-    }
     render = () => {
-        const { data: products, markOutOfStock, removeOutOfStock } = this.props;
+        const { data: products, markOutOfStock, removeOutOfStock, addNew } = this.props;
         const productItems = products.map((product) => (
            <ProductItem key={product.id} {...{product, markOutOfStock}} />
         ));
@@ -29,9 +23,7 @@ export class Products extends React.Component {
             <>
                 <h1>Products</h1>
                 <hr />
-                <label htmlFor="">Product Name :</label>
-                <input type="text" onChange={evt => this.setState({ newProductName: evt.target.value })} />
-                <input type="button" value="Add New" onClick={this.onAddNewClick} />
+                <NewProduct addNew={addNew} />
                 <ol className="productsList">
                     {productItems}
                 </ol>
