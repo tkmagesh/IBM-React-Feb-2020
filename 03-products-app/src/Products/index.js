@@ -9,7 +9,7 @@ import * as productActionCreators from './actions';
 
 class Products extends React.Component {
     render = () => {
-        const { data: products, markOutOfStock, removeOutOfStock, addNew } = this.props;
+        const { data: products, categories, markOutOfStock, removeOutOfStock, addNew } = this.props;
         const productItems = products.map((product) => (
            <ProductItem key={product.id} {...{product, markOutOfStock}} />
         ));
@@ -18,7 +18,7 @@ class Products extends React.Component {
                 <h1>Products</h1>
                 <hr />
                 <ProductsCount data={products} />
-                <NewProduct addNew={addNew} />
+                {categories.length ? (<NewProduct addNew={addNew} categories={categories} />) : null }
                 <ol className="productsList">
                     {productItems}
                 </ol>
@@ -31,8 +31,14 @@ class Products extends React.Component {
 }
 
 function mapStateToProps(storeState){
-    const products = storeState.productsState;
-    return { data : products };
+    const products = storeState.productsState,
+        categories = storeState.categoriesState.categories,
+        selectedCategory = storeState.categoriesState.selectedCategory;
+    if (selectedCategory === ''){
+        return { data : products, categories : categories };
+    } else {
+        return { data: products.filter(product => product.category === selectedCategory), categories: categories};
+    }
 }
 function mapDispatchToProps(dispatch){
     var productActionDispatchers = bindActionCreators(productActionCreators, dispatch);

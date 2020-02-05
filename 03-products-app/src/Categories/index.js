@@ -2,9 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-export function categoriesReducer(currentState = [], action){
+const defaultCategoryState = {
+    selectedCategory : '',
+    categories : []
+};
+
+export function categoriesReducer(currentState = defaultCategoryState, action){
     if (action.type === 'ADD_NEW_CATEGORY'){
-        return [...currentState, action.payload];
+        return { ...currentState, categories : [ ...currentState.categories, action.payload]}
+    }
+    if (action.type === 'SET_SELECTED_CATEGORY'){
+        return { ...currentState, selectedCategory : action.payload };
     }
     return currentState;
 }
@@ -13,14 +21,19 @@ export let categoryActionCreators = {
     addNew(categoryName){
         const action = { type :'ADD_NEW_CATEGORY', payload : categoryName};
         return action;
+    },
+    setSelected(categoryName){
+        const action = { type : 'SET_SELECTED_CATEGORY', payload : categoryName};
+        return action;
     }
 }
 
 class Categories extends React.Component{
+    
     render = () => {
-        const { data : categories, addNew } = this.props;
+        const { data : categories, addNew, setSelected, selectedCategory } = this.props;
         const categoryItems = categories.map((category, index) => (
-            <span key={index}> [ {category} ] </span>
+            <span key={index} onClick={() => setSelected(category)} className={category === selectedCategory ? 'highlight' : ''}  > [ {category} ] </span>
         ));
         return(
             <React.Fragment>
@@ -36,8 +49,8 @@ class Categories extends React.Component{
 }
 
 function mapStateToProps(storeState){
-    const categories = storeState.categoriesState;
-    return { data : categories };
+    const categories = storeState.categoriesState.categories;
+    return { data: categories, selectedCategory: storeState.categoriesState.selectedCategory };
 }
 
 function mapDispatchToProps(dispatch){

@@ -7,6 +7,7 @@ const ProductItem = ({ product, markOutOfStock }) => (
             Mark Out of Stock
         </button>
         <button>Remove</button>
+        <div> [ {product.category} ] </div>
     </li>
 )
 
