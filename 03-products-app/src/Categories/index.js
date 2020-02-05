@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 export function categoriesReducer(currentState = [], action){
     if (action.type === 'ADD_NEW_CATEGORY'){
@@ -14,7 +16,7 @@ export let categoryActionCreators = {
     }
 }
 
-export class Categories extends React.Component{
+class Categories extends React.Component{
     render = () => {
         const { data : categories, addNew } = this.props;
         const categoryItems = categories.map((category, index) => (
@@ -32,3 +34,18 @@ export class Categories extends React.Component{
         )
     }
 }
+
+function mapStateToProps(storeState){
+    const categories = storeState.categoriesState;
+    return { data : categories };
+}
+
+function mapDispatchToProps(dispatch){
+    var categoryActionDispatchers = bindActionCreators(categoryActionCreators, dispatch);
+    return categoryActionDispatchers;
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Categories);

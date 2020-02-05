@@ -2,9 +2,12 @@ import React from 'react';
 import './index.css';
 import ProductItem from './views/ProductItem';
 import NewProduct  from './views/NewProduct';
+import ProductsCount  from './views/ProductsCount';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as productActionCreators from './actions';
 
-
-export class Products extends React.Component {
+class Products extends React.Component {
     render = () => {
         const { data: products, markOutOfStock, removeOutOfStock, addNew } = this.props;
         const productItems = products.map((product) => (
@@ -14,6 +17,7 @@ export class Products extends React.Component {
             <>
                 <h1>Products</h1>
                 <hr />
+                <ProductsCount data={products} />
                 <NewProduct addNew={addNew} />
                 <ol className="productsList">
                     {productItems}
@@ -26,17 +30,16 @@ export class Products extends React.Component {
     }
 }
 
-
-
-export class ProductsCount extends React.Component {
-    render = () => {
-        const products = this.props.data,
-            outOfStockCount = products.reduce((prevResult, product) => product.isOutOfStock ? ++prevResult : prevResult, 0);
-        return (
-            <div>
-                <span>Stats : </span>
-                <span className="outOfStock">{outOfStockCount}</span> / <span>{products.length} </span>
-            </div>
-        )
-    }
+function mapStateToProps(storeState){
+    const products = storeState.productsState;
+    return { data : products };
 }
+function mapDispatchToProps(dispatch){
+    var productActionDispatchers = bindActionCreators(productActionCreators, dispatch);
+    return productActionDispatchers;
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Products);
