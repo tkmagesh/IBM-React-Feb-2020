@@ -5,6 +5,6 @@ export function addNew(productName){
         name : productName,
         isOutOfStock : false
     };
-    let action = { type: 'ADD_NEW', payload: newProduct };
+    let action = { type: 'ADD_NEW_PRODUCT', payload: newProduct };
     return action;
 }

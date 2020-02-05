@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function categoriesReducer(currentState = [], action){
-    if (action.type === 'ADD_NEW'){
+    if (action.type === 'ADD_NEW_CATEGORY'){
         return [...currentState, action.payload];
     }
     return currentState;
@@ -9,14 +9,14 @@ export function categoriesReducer(currentState = [], action){
 
 export let categoryActionCreators = {
     addNew(categoryName){
-        const action = { type :'ADD_NEW', payload : categoryName};
+        const action = { type :'ADD_NEW_CATEGORY', payload : categoryName};
         return action;
     }
 }
 
 export class Categories extends React.Component{
     render = () => {
-        const { categories, addNew } = this.props;
+        const { data : categories, addNew } = this.props;
         const categoryItems = categories.map((category, index) => (
             <span key={index}> [ {category} ] </span>
         ));

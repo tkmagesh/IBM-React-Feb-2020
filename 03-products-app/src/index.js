@@ -4,37 +4,39 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { createStore, bindActionCreators } from 'redux';
+import { createStore, bindActionCreators, combineReducers } from 'redux';
 import productsReducer from './Products/reducers';
 import * as productActionCreators from './Products/actions';
 import { Products, ProductsCount } from './Products';
 
 import { categoriesReducer, categoryActionCreators, Categories } from './Categories';
 
+const rootReducer = combineReducers({
+    productsState : productsReducer,
+    categoriesState : categoriesReducer
+});
 
-var store = createStore(productsReducer);
+var store = createStore(rootReducer);
+
+var categoryActionDispatchers = bindActionCreators(categoryActionCreators, store.dispatch);
 var productActionDispatchers = bindActionCreators(productActionCreators, store.dispatch);
 
-function renderApp() {
-    const products = store.getState();
-    ReactDOM.render(
+function renderApp(){
+    const storeState = store.getState();
+    const products = storeState.productsState;
+    const categories = storeState.categoriesState;
+
+    ReactDOM.render( 
         <div>
+            <Categories data={categories} {...categoryActionDispatchers} />
+            <hr/>
             <Products data={products} {...productActionDispatchers} />
             <hr />
             <ProductsCount data={products} />
         </div>,
-        document.getElementById('root'))
+        document.getElementById('root'));
 }
-store.subscribe(renderApp);
+
 renderApp();
+store.subscribe(renderApp);
 
-//import * as calculator from'./calculator';
-//import { add } from './calculator';
-//import calculator from './calculator';
-
-//ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
