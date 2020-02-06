@@ -1,12 +1,19 @@
-let currentProductId = 0;
+import * as productsApi from '../services/productsApi';
+
 export function addNew(productName, category){
-    console.log(arguments);
-    const newProduct = {
-        id :++currentProductId,
-        name : productName,
-        category : category,
-        isOutOfStock : false
-    };
-    let action = { type: 'ADD_NEW_PRODUCT', payload: newProduct };
-    return action;
+    return function(dispatch){
+        const newProductData = {
+            id : 0,
+            name : productName,
+            category : category,
+            isOutOfStock : false
+        };
+        productsApi
+            .save(newProductData)
+            .then(function(newProduct){
+                let action = { type: 'ADD_NEW_PRODUCT', payload: newProduct };
+                dispatch(action);
+            });
+    }
+    
 }

@@ -6,10 +6,15 @@ function productsReducer(currentState = [], action) {
         const updatedProduct = action.payload;
         return currentState.map(product => product.id === updatedProduct.id ? updatedProduct : product );
     }
-    if (action.type === 'REMOVE_PRODUCT'){
+    if (action.type === 'REMOVE_PRODUCTS'){
         const productsToRemove = action.payload;
         const newState = currentState.filter(product => productsToRemove.indexOf(product) === -1);
-        console.table(newState);
+
+        return newState;
+    }
+    if (action.type === 'REMOVE_PRODUCT') {
+        const productToRemove = action.payload;
+        const newState = currentState.filter(product => productToRemove.id !== product.id);
         return newState;
     }
     if (action.type === 'INIT_PRODUCTS'){

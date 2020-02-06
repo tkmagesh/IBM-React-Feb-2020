@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as productsApi from '../services/productsApi';
 
 function getLocalData(){
     const data = [
@@ -25,18 +25,17 @@ function getLocalData(){
     return data;
 }
 
-/* export function loadProducts(){
+ export function loadProducts(){
     return function(dispatch, getState){
-        axios
-            .get('http://localhost:3030/products')
-            .then(response => response.data)
+        productsApi
+            .getAll()
             .then(function(data){
                 const action = { type: 'INIT_PRODUCTS', payload: data };        
                 return dispatch(action);
             })
     }
-} */
-
+} 
+/* 
 export function loadProducts() {
     return axios
         .get('http://localhost:3030/products')
@@ -45,4 +44,4 @@ export function loadProducts() {
             const action = { type: 'INIT_PRODUCTS', payload: data };
             return action;
         });
-}
+} */

@@ -23,7 +23,7 @@ class Products extends React.Component {
                 <ol className="productsList">
                     {productItems}
                 </ol>
-                <button onClick={() => removeOutOfStock(products)}>
+                <button onClick={() => removeOutOfStock()}>
                     Remove All Out Of Stock Products
                 </button>
             </>
@@ -38,7 +38,7 @@ function mapStateToProps(storeState){
     if (selectedCategory === ''){
         return { data : products, categories : categories };
     } else {
-        return { data: products.filter(product => product.category === selectedCategory), categories: categories};
+        return { data: products.filter(product => product.category === selectedCategory.name), categories: categories};
     }
 }
 function mapDispatchToProps(dispatch){

@@ -1,5 +1,13 @@
+import * as productsApi from '../services/productsApi';
+
 export function markOutOfStock(product){
-    const markedOutOfStockProduct = { ...product, isOutOfStock : true };
-    const action = { type : 'UPDATE_PRODUCT', payload : markedOutOfStockProduct };
-    return action;
+    return function(dispatch){
+        const markedOutOfStockProduct = { ...product, isOutOfStock : true };
+        productsApi
+            .save(markedOutOfStockProduct)
+            .then(function(updatedProduct){
+                const action = { type: 'UPDATE_PRODUCT', payload: updatedProduct };
+                dispatch(action);
+            });
+    }
 }

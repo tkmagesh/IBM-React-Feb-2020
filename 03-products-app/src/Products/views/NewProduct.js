@@ -3,7 +3,7 @@ import React from 'react';
 const NewProduct = ({ addNew, categories }) => {
     const [newProductName, setNewProductName] = React.useState('');
     const categoryItems = categories.map(category => (
-        <option value={category} key={category}>{category}</option>)
+        <option value={category.name} key={category.id}>{category.name}</option>)
     );
     const [category, setCategory] = React.useState('');
     return (
