@@ -7,7 +7,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as productActionCreators from './actions';
 
-class Products extends React.Component {
+/* class Products extends React.Component {
+    componentDidMount = () => {
+        this.props.loadProducts();
+    }
     render = () => {
         const { data: products, categories, markOutOfStock, removeOutOfStock, addNew, loadProducts } = this.props;
         const productItems = products.map((product) => (
@@ -15,7 +18,7 @@ class Products extends React.Component {
         ));
         return (
             <>
-                <button onClick={loadProducts}>Load Products</button>
+                 <button onClick={loadProducts}>Load Products</button>
                 <h1>Products</h1>
                 <hr />
                 <ProductsCount data={products} />
@@ -29,8 +32,33 @@ class Products extends React.Component {
             </>
         )
     }
-}
+} */
 
+
+const Products = (props) => {
+    const { data: products, categories, markOutOfStock, removeOutOfStock, addNew, loadProducts } = props;
+    React.useEffect(() => {
+        loadProducts();
+    }, []);
+    const productItems = products.map((product) => (
+        <ProductItem key={product.id} {...{ product, markOutOfStock }} />
+    ));
+    return (
+        <>
+            {/* <button onClick={loadProducts}>Load Products</button> */}
+            <h1>Products</h1>
+            <hr />
+            <ProductsCount data={products} />
+            {categories.length ? (<NewProduct addNew={addNew} categories={categories} />) : null}
+            <ol className="productsList">
+                {productItems}
+            </ol>
+            <button onClick={() => removeOutOfStock()}>
+                Remove All Out Of Stock Products
+                </button>
+        </>
+    )
+}
 function mapStateToProps(storeState){
     const products = storeState.productsState,
         categories = storeState.categoriesState.categories,

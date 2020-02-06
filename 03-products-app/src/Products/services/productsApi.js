@@ -11,7 +11,7 @@ export function save(productData){
     if (productData.id === 0){
         //new product
         return axios
-            .post(productsServiceEndPoint)
+            .post(productsServiceEndPoint, productData)
             .then(response => response.data);
     } else {
         //existing product

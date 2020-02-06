@@ -45,7 +45,9 @@ export let categoryActionCreators = {
 }
 
 class Categories extends React.Component{
-    
+    componentDidMount = () => {
+        this.props.load();
+    }
     render = () => {
         const { data : categories, addNew, setSelected, selectedCategory, load } = this.props;
         const categoryItems = categories.map((category, index) => (
@@ -55,7 +57,7 @@ class Categories extends React.Component{
             <React.Fragment>
                 <h3>Categories</h3>
                 <hr/>
-                <input type="button" value="Load Categories" onClick={() => load()} />
+               {/*  <input type="button" value="Load Categories" onClick={() => load()} /> */}
                 <br/>
                 <label>Category Name :</label>
                 <input type="text" onChange={ evt => this.setState({newCategoryName : evt.target.value})}/>

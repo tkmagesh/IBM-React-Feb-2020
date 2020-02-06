@@ -1,5 +1,30 @@
 {
-  "products": [],
+  "products": [
+    {
+      "id": 2,
+      "name": "Pencil",
+      "category": "stationary",
+      "isOutOfStock": false
+    },
+    {
+      "id": 3,
+      "name": "Marker",
+      "category": "stationary",
+      "isOutOfStock": false
+    },
+    {
+      "id": 4,
+      "name": "Rice",
+      "category": "grocery",
+      "isOutOfStock": false
+    },
+    {
+      "id": 5,
+      "name": "Lentil",
+      "category": "grocery",
+      "isOutOfStock": false
+    }
+  ],
   "categories": [
     {
       "id": 1,
