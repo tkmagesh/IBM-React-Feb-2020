@@ -24,7 +24,8 @@ export function categoriesReducer(currentState = defaultCategoryState, action){
 
 export let categoryActionCreators = {
     addNew(categoryName){
-        const action = { type :'ADD_NEW_CATEGORY', payload : categoryName};
+        const newCategoryData = { id : 0, name : categoryName };
+        const action = { type: 'ADD_NEW_CATEGORY', payload: newCategoryData};
         return action;
     },
     setSelected(categoryName){

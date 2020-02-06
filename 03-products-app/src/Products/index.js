@@ -36,6 +36,7 @@ import * as productActionCreators from './actions';
 
 
 const Products = (props) => {
+    console.log(props);
     const { data: products, categories, markOutOfStock, removeOutOfStock, addNew, loadProducts } = props;
     React.useEffect(() => {
         loadProducts();
